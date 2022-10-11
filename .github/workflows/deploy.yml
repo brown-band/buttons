@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Compress Images
+        run: mogrify -monitor -resize 500x500 -format webp **.png
+
+      - name: Upload Site
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .
+          retention-days: 90
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
