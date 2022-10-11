@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Compress Images
-        run: mogrify -monitor -resize 500x500 -format webp **.png
+        run: mogrify -monitor -resize 500x500 -format webp **/*.png
 
       - name: Upload Site
         uses: actions/upload-pages-artifact@v1
