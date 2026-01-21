@@ -25,7 +25,7 @@ jobs:
         run: find . -type f \( -name "*.jpg" -o -name "*.png" \) -exec mogrify -verbose -resize 500x500 -format webp {} \;
 
       - name: Upload Site
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: .
           retention-days: 90
